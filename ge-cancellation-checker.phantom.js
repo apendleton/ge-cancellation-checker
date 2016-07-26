@@ -169,6 +169,20 @@ var steps = [
         }, settings.enrollment_location_id.toString());
     },
     function() {
+        page.evaluate(function() {
+            if (document.location.href.match(/SelectEnrollmentCenterPostAction.do$/)) {
+                function fireClick(el) {
+                    var ev = document.createEvent("MouseEvents");
+                    ev.initEvent("click", true, true);
+                    el.dispatchEvent(ev);
+                }
+                // we've hit the extra step of having to confirm our enrollment center
+                fireClick(document.querySelector('input[name=next]'));
+                console.log("Confirming location");
+            }
+        });
+    },
+    function() {
 
         page.evaluate(function() {
 
